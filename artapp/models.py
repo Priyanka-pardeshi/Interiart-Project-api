@@ -3,15 +3,16 @@ from django.db import models
 
 # Create your models here.
 class Information(models.Model):
+    # add id
     date = models.DateTimeField()
-    Arrival = models.IntegerField()
-    Departures = models.IntegerField()
+    arrival = models.IntegerField()
+    departures = models.IntegerField()
 
 
 class Quote(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=40)
     phone = models.CharField(max_length=11)
     email = models.EmailField()
-    property_type = models.CharField(max_length=30)
-    service_type = models.CharField(max_length=30)
+    property = models.CharField(max_length=30)
+    service = models.CharField(max_length=30)
     message = models.TextField()
