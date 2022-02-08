@@ -3,10 +3,10 @@ from django.db import models
 
 # Create your models here.
 class Information(models.Model):
-    # add id
     date = models.DateTimeField()
     arrival = models.IntegerField()
     departures = models.IntegerField()
+
 
 
 class Quote(models.Model):
