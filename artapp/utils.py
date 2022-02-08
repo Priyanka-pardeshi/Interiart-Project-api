@@ -1,4 +1,5 @@
 
+from django.db import connection
 
 import datetime
 
@@ -20,10 +21,18 @@ def date_validation(date):
 
 '''
 '''
-
+def read_file_data(file_data):
+    #file_data = request.data['file']
+    read_file_data = pd.read_csv(file_data)
+    logging.info('Read the csv file')
+    dict_data = read_file_data.to_dict('dict')
+    return dict_data
 
 def clear_table():
-    Information.objects.all().delete()
+    cursor = connection.cursor()
+    cursor.execute('TRUNCATE TABLE artapp_information')
+    connection.commit()
+    # Information.objects.all().delete()
 
 
 '''
@@ -40,6 +49,6 @@ def save_data(dict_data):
     for (dates, arrival, departure) in zip(date_list, arrival_list, departure_list):
         print(dates, arrival, departure)
         valid_date = date_validation(dates)
-        info = Information(date=valid_date, Arrival=arrival, Departures=departure)
+        info = Information(date=valid_date, arrival=arrival, departures=departure)
         object_list.append(info)
     Information.objects.bulk_create(object_list)
