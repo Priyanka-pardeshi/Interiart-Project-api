@@ -32,9 +32,6 @@ class GetData(APIView):
         try:
 
             file_data = request.data['file']
-            # read_file_data = pd.read_csv(file_data)
-            # logging.info('Read the csv file')
-            # dict_data = read_file_data.to_dict('dict')
             dict_data=read_file_data(file_data)
             logging.info('Cleared table of database')
             clear_table()
@@ -95,29 +92,16 @@ class ShowQuote(APIView):
             #info = Information.objects.all()
             print("Request::",request.GET)
             info=Information.objects.raw('select id,date,arrival,departures from artapp_information')
-
-            # current_page_number = request.data.get('page') or 1
-            #
-            # number_of_records = request.data.get('number') or 5
             current_page_number = request.GET.get('page') or 1
-
             number_of_records = request.GET.get('number') or 5
-
             page_number = request.GET.get('page', current_page_number)
             paginator = Paginator(info, number_of_records)
-            # page_number = request.GET.get('page', page)
-            # paginator = Paginator(info, number)
-
             temp = paginator.page(page_number)
             serializer=InformationSerializer(data=temp.object_list,many=True)
             serializer.is_valid()
             print("serializer::",serializer.data)
-            #print(list(temp.object_list.values()))
-
-
             # check how many pages
             logging.info('Displaying data using pagination.')
-            # {"data":{"travellist":[],"current_page":2}}- response struct
             return Response({'data': serializer.data, 'page':current_page_number})
         except PermissionDenied:
             logging.exception('Exception:authenticated request fails the permission checks')
