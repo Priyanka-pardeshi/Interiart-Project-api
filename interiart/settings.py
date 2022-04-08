@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'interiart.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'interi',
+        'NAME': 'artap',
         'USER': 'postgres',
         'PASSWORD': 'System',
         'HOST': 'localhost',
